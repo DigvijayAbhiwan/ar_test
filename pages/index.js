@@ -38,7 +38,7 @@ export default function Home() {
 }
 
 function Model({ color }) {
-  const { scene } = useGLTF("/model.glb", true);
+  const { scene } = useGLTF("/dog.glb", true);
   if (!scene) {
     console.error("Model failed to load.");
     return null;
