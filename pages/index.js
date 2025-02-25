@@ -38,7 +38,7 @@ export default function Home() {
 }
 
 function Model({ color }) {
-  const { scene } = useGLTF("/scene.gltf");
+  const { scene } = useGLTF("/model.glb");
   scene.traverse((child) => {
     if (child.isMesh) child.material.color.set(color);
   });
