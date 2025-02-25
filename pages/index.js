@@ -85,7 +85,9 @@ function Model({ color, setModelPosition, modelPosition }) {
   });
 
   return (
-    <group ref={modelRef} position={modelPosition} scale={[0.5, 0.5, 0.5]}>
+    <group ref={modelRef} position={modelPosition} scale={[3, 3, 3]}>
+      {" "}
+      {/* Increased Scale */}
       <primitive object={scene} />
     </group>
   );
