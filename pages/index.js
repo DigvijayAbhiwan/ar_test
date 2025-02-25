@@ -23,7 +23,11 @@ export default function Home() {
           <Hands />
           <PointerIndicator position={modelPosition} />
           <Interactive onSelect={() => console.log("Model Touched")}>
-            <Model color={color} setModelPosition={setModelPosition} />
+            <Model
+              color={color}
+              setModelPosition={setModelPosition}
+              modelPosition={modelPosition}
+            />
           </Interactive>
           <OrbitControls />
         </XR>
@@ -55,7 +59,7 @@ export default function Home() {
 }
 
 // Model Component with Dynamic Placement
-function Model({ color, setModelPosition }) {
+function Model({ color, setModelPosition, modelPosition }) {
   const { scene } = useGLTF("/dog.glb");
   const modelRef = useRef();
 
@@ -76,12 +80,12 @@ function Model({ color, setModelPosition }) {
 
   useFrame(() => {
     if (modelRef.current) {
-      modelRef.current.position.set(...modelPosition);
+      modelRef.current.position.set(...modelPosition); // FIXED: Now using the correct state
     }
   });
 
   return (
-    <group ref={modelRef} position={[0, 1, -1]} scale={[0.5, 0.5, 0.5]}>
+    <group ref={modelRef} position={modelPosition} scale={[0.5, 0.5, 0.5]}>
       <primitive object={scene} />
     </group>
   );
