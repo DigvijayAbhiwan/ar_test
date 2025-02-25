@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center">
       {/* AR Button to start AR Mode */}
-      {/* <ARButton /> */}
+      <ARButton />
 
       {/* 3D Canvas for AR Experience */}
       <Canvas className="w-full h-full">
