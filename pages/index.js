@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
-import { XR, ARButton } from "@react-three/xr";
+import { XR, ARButton, Hands, Interactive } from "@react-three/xr";
 import { OrbitControls, useGLTF } from "@react-three/drei";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [color, setColor] = useState("white");
@@ -16,7 +16,10 @@ export default function Home() {
         <XR>
           <ambientLight intensity={0.5} />
           <directionalLight position={[2, 2, 2]} />
-          <Model color={color} />
+          <Hands />
+          <Interactive>
+            <Model color={color} />
+          </Interactive>
           <OrbitControls />
         </XR>
       </Canvas>
@@ -38,13 +41,19 @@ export default function Home() {
 }
 
 function Model({ color }) {
-  const { scene } = useGLTF("/dog.glb", true);
-  if (!scene) {
-    console.error("Model failed to load.");
-    return null;
-  }
-  scene.traverse((child) => {
-    if (child.isMesh) child.material.color.set(color);
-  });
-  return <primitive object={scene} />;
+  const { scene } = useGLTF("/dog.glb");
+
+  useEffect(() => {
+    scene.traverse((child) => {
+      if (child.isMesh) {
+        child.material.color.set(color);
+      }
+    });
+  }, [color, scene]); // Re-run when `color` changes
+
+  return (
+    <group position={[0, 1, -1]} scale={[0.5, 0.5, 0.5]}>
+      <primitive object={scene} />
+    </group>
+  );
 }
