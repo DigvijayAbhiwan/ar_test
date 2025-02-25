@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center">
       {/* AR Button to start AR Mode */}
-      <ARButton />
+      {/* <ARButton /> */}
 
       {/* 3D Canvas for AR Experience */}
       <Canvas className="w-full h-full">
@@ -38,7 +38,11 @@ export default function Home() {
 }
 
 function Model({ color }) {
-  const { scene } = useGLTF("/model.glb");
+  const { scene } = useGLTF("/model.glb", true);
+  if (!scene) {
+    console.error("Model failed to load.");
+    return null;
+  }
   scene.traverse((child) => {
     if (child.isMesh) child.material.color.set(color);
   });
